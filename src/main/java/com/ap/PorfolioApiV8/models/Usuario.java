@@ -1,5 +1,6 @@
 package com.ap.PorfolioApiV8.models;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -17,24 +18,29 @@ public class Usuario {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id_usuario;    
-    private Long id_email;
+    @Column(name = "usuario") 
+    private String nombreUsuario;
+    private String email;
     private String password; 
     private Long id_persona;
-    private Long id_rol;
+    
     private String foto_perfil;    
     private String foto_portada;    
 
     public Usuario() {
     }
 
-    public Usuario(Long id_usuario, Long id_email, String password, Long id_persona, Long id_rol, String foto_perfil, String foto_portada) {
-        this.id_usuario = id_usuario;
-        this.id_email = id_email;
+    public Usuario( String nombreUsuario, String password, String email,  Long id_persona, String foto_perfil, String foto_portada) {
+       
+        this.nombreUsuario = nombreUsuario;
         this.password = password;
+        this.email = email;
         this.id_persona = id_persona;
-        this.id_rol = id_rol;
+        
         this.foto_perfil = foto_perfil;
         this.foto_portada = foto_portada;
     }
+
+    
     
 }

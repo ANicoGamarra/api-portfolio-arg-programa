@@ -18,16 +18,18 @@ public class RedSocial {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id_red_social;        
     private String nombre; 
-    private String usuario;
+    private String url;
+    private String logo_url;
     private Long id_persona;
     
     public RedSocial() {
     }
 
-    public RedSocial(Long id_red_social, String nombre, String usuario, Long id_persona) {
+    public RedSocial(Long id_red_social, String nombre, String url, String logo_url, Long id_persona) {
         this.id_red_social = id_red_social;
         this.nombre = nombre;
-        this.usuario = usuario;
+        this.url = url;
+        this.logo_url = logo_url;
         this.id_persona = id_persona;
     }
 

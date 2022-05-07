@@ -25,16 +25,18 @@ public class Persona {
     
     private Date fecha_nac;    
     private String descripcion;
+    private String localidad;
 
     public Persona() {
     }
 
-    public Persona(Long id_persona, String nombre, String apellido, Date fecha_nac, String descripcion) {
+    public Persona(Long id_persona, String nombre, String apellido, Date fecha_nac, String descripcion, String localidad) {
         this.id_persona = id_persona;
         this.nombre = nombre;
         this.apellido = apellido;
         this.fecha_nac = fecha_nac;
         this.descripcion = descripcion;
+        this.localidad = localidad;
     }
 
     
