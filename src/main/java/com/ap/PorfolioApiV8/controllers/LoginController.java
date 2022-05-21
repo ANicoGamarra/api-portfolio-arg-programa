@@ -1,39 +1,79 @@
 package com.ap.PorfolioApiV8.controllers;
 
-import com.ap.PorfolioApiV8.models.Login;
-import com.ap.PorfolioApiV8.security.JwtDto;
-import com.ap.PorfolioApiV8.security.JwtProvider;
+import java.util.Date;
+import java.util.List;
+import java.util.stream.Collectors;
+
+import com.ap.PorfolioApiV8.Services.Usuario.IUsuarioService;
+
+import com.ap.PorfolioApiV8.models.Usuario;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
+
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.AuthorityUtils;
+
+import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import io.jsonwebtoken.Jwts;
+import io.jsonwebtoken.SignatureAlgorithm;
+
+@CrossOrigin("*")
 @RestController
 @RequestMapping("/api/login")
 public class LoginController {
     
+    
     @Autowired
-    private JwtProvider jwtProvider;
-    @Autowired
-    private AuthenticationManager authenticationManager;
-    private JwtDto token = new JwtDto("null");
+    private IUsuarioService usuarioServ;
 
-    @PostMapping
-    public ResponseEntity<?> authenticateUser(@RequestBody Login login) {
-        Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(login.getNombreUsuario(), login.getPassword()));
+    private String getJWTToken(String username) {
 
-       SecurityContextHolder.getContext().setAuthentication(authentication);
+        String secretKey = "W3L0v3Arg3nt1n4";
 
-       String token = this.jwtProvider.generarToken(authentication);
-        return ResponseEntity.ok(new JwtDto(token));
+        List<GrantedAuthority> grantedAuthorities = AuthorityUtils
+                .commaSeparatedStringToAuthorityList("ROLE_USER");
+
+        String token = Jwts
+                .builder()
+                .setId("ap17380")
+                .setSubject(username)
+                .claim("authorities",
+                        grantedAuthorities.stream()
+                                .map(GrantedAuthority::getAuthority)
+                                .collect(Collectors.toList()))
+                .setIssuedAt(new Date(System.currentTimeMillis()))
+                .setExpiration(new Date(System.currentTimeMillis() + 60 * 60 * 1000)) // 1 hora de duración
+                .signWith(SignatureAlgorithm.HS512,
+                        secretKey.getBytes())
+                .compact();
+
+        return "Bearer " + token;
     }
 
+
+
+
+
+    @PostMapping
+    public ResponseEntity<Usuario> login(@Validated @RequestBody Usuario user) {
+
+        Usuario usuarioRecuperado = usuarioServ.getByUsername(user.getNombreUsuario());
+        if (usuarioRecuperado.getPassword().equals(user.getPassword())) {
+            String token = getJWTToken(user.getNombreUsuario());
+            usuarioRecuperado.setToken(token);
+            usuarioRecuperado.setPassword(null);
+            return ResponseEntity.ok().body(usuarioRecuperado);
+        } else {
+            return ResponseEntity.badRequest().build();
+        }
+
+    }
 
 }

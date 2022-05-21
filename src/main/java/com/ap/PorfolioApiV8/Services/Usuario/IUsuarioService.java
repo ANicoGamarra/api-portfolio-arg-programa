@@ -19,5 +19,7 @@ public interface IUsuarioService {
     public ResponseEntity<Usuario> buscarUsuarioId (Long id);
     
     public void editarUsuario (Usuario user);
+
+    public Usuario getByUsername(String nombreUsuario);
     
 }
