@@ -24,17 +24,19 @@ public class Proyecto {
     private Date fecha;    
     private String descripcion;
     private String enlace;
+    private String proyecto_portada;
 
 
     public Proyecto() {
     }
 
-    public Proyecto(Long id_proyecto, String nombre, Date fecha, String descripcion, String enlace) {
+    public Proyecto(Long id_proyecto, String nombre, Date fecha, String descripcion, String enlace, String proyecto_portada) {
         this.id_proyecto = id_proyecto;
         this.nombre = nombre;
         this.fecha = fecha;
         this.descripcion = descripcion;
         this.enlace = enlace;
+        this.proyecto_portada = proyecto_portada;
     }
     
 }
