@@ -24,13 +24,14 @@ public class Experiencia {
     private Date fecha_ingreso;
     private Date fecha_egreso;
     private String descripcion;
-    private String logo_empresa;  
+    private String logo_empresa;
+    private String enlace_empresa;  
     private Long id_persona;
 
     public Experiencia() {
     }
 
-    public Experiencia(Long id_experiencia, String empresa, String puesto, Date fecha_ingreso, Date fecha_egreso, String descripcion, String logo_empresa, Long id_persona) {
+    public Experiencia(Long id_experiencia, String empresa, String puesto, Date fecha_ingreso, Date fecha_egreso, String descripcion, String logo_empresa, String enlace_empresa, Long id_persona) {
         this.id_experiencia = id_experiencia;
         this.empresa = empresa;
         this.puesto = puesto;
@@ -38,6 +39,7 @@ public class Experiencia {
         this.fecha_egreso = fecha_egreso;
         this.descripcion = descripcion;
         this.logo_empresa = logo_empresa;
+        this.enlace_empresa = enlace_empresa;
         this.id_persona = id_persona;
     }
 

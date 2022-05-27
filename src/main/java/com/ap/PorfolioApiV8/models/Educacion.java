@@ -24,7 +24,8 @@ public class Educacion {
     private String institucion;
     private Date fecha_egresado;
     private String certificado;
-    private String logo_educacion;   
+    private String logo_educacion;
+    private String enlace_educacion;   
     private String descripcion;
     private Long id_persona;
     
@@ -32,13 +33,14 @@ public class Educacion {
     public Educacion() {
     }
 
-    public Educacion(Long id_educacion, String titulo, String institucion, Date fecha_egresado, String certificado, String logo_educacion, String descripcion, Long id_persona) {
+    public Educacion(Long id_educacion, String titulo, String institucion, Date fecha_egresado, String certificado, String logo_educacion, String enlace_educacion, String descripcion, Long id_persona) {
         this.id_educacion = id_educacion;
         this.titulo = titulo;
         this.institucion = institucion;
         this.fecha_egresado = fecha_egresado;
         this.certificado = certificado;
         this.logo_educacion = logo_educacion;
+        this.enlace_educacion = enlace_educacion;
         this.descripcion = descripcion;
         this.id_persona = id_persona;
        
